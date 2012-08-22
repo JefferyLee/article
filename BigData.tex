@@ -1,0 +1,224 @@
+%!TEX TS-program = xelatex
+%!TEX encoding = UTF-8 Unicode
+
+\documentclass[12pt]{article}
+\usepackage{graphicx}
+
+\usepackage{geometry}
+\geometry{letterpaper}
+\usepackage{indentfirst}
+\usepackage{fontspec,xltxtra,xunicode} %字体包设置
+\defaultfontfeatures{Mapping=tex-text}
+\setromanfont{SimSun} %设置中文字体
+\XeTeXlinebreaklocale "zh"
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt %文章内中文自动换行
+
+\usepackage{fancyhdr}
+\pagestyle{fancy} %页码位置和风格
+
+\linespread{1.5} %设置行间距
+
+\setlength{\parindent}{2em}
+%\setlength{\parskip}{1ex plus 0.5ex minus 0.2ex}
+
+\newfontfamily{\H}{楷体} 
+\newfontfamily{\E}{Arial}
+\title{\H Weekly Technology Review\\[2ex]---大数据}
+\author{Jeffery}
+
+\begin{document}
+
+\maketitle
+
+\newpage
+
+\tableofcontents
+\newpage
+
+\section{前言}
+\paragraph{}
+所谓“大数据”，不仅是指数据量大，而且包含数据产生和消费速度快、数据类型繁多、数据价值密度低等概念，用传统的以RDBMS为核心的数据的处理方法已经不敷使用。
+
+\paragraph{}
+随着公安信息化、电子政务的进一步开展，公安等政府部门掌握的数据愈来愈多，比如全国人口库，总数据量超过100TB，每周更新量超过10TB。随着视频监控、云计算、物联网等技术的应用，数据量还会继续加速增长，数据类型也日益繁多。从发展的趋势上看，电子政务、公安信息化，正在跨越“大数据”（Big Data）的门槛。
+
+\paragraph{}
+天行网安作为以数据交换、共享和安全应用为基础的应用安全厂商，即便是不直接开发大数据相关技术，对其进行相应的了解也是必须的。我希望公司的一线人员在于客户进行沟通的过程中，如果碰到“大数据”的说法，心里有数。
+
+\newpage
+
+\section{定义}
+\paragraph{}
+自古至今，从未有一个时代出现过如此大规模的数据爆炸。
+
+\paragraph{}
+根据技术研究机构IDC的预计，大量新数据无时不刻不在涌现，它们以每年50\%的速度在增长，或者说每两年就要翻一番多。并不仅仅是数据的洪流越来越大，而且全新的支流也会越来越多。
+
+\paragraph{}
+对于大数据的特点，业界通常用Volume、Variety、Value、Velocity这4个V来概括。
+
+\begin{description}
+\item{Volume}
+数据体量巨大。从TB级别跃升到PB乃至EB级别。要知道目前的数据量有多大，我们先来看看一组公式。1024GB=1TB；1024TB=1PB；1024PB=1EB；1024 EB=1ZB；1024ZB=YB。到目前为止，人类生产的所有印刷材料的数据量是200PB，而历史上全人类说过的所有的话的数据量大约是5EB。
+
+\item{Variety}
+数据类型繁多。这种类型的多样性也让数据被分为结构化数据和非结构化数据。相对于以往便于存储的以文本为主的结构化数据，越来越多的非结构化 数据的产生给所有厂商都提出了挑战。拜互联网和通信技术近年来迅猛发展所赐，如今的数据类型早已不是单一的文本形式，除了网络日志、音频、视频、图片、地理位置信息等等多类型的数据对数据的处理能力提出了更高的要求。
+
+\item{Value}
+价值密度低。价值密度的高低与数据总量的大小成反比。以视频为例，一部一小时的视频，在连续不间断监控过程中，可能有用的数据仅仅只有一两秒。如何通过强大的机器算法更迅速地完成数据的价值“提纯”是目前大数据汹涌背景下亟待解决的难题。
+
+\item{Velocity}
+处理速度快。这是大数据区分于传统数据挖掘最显著的特征。根据IDC的一份名为“数字宇宙”的报告，预计到2020年全球数据使用量将会达到35.2ZB。在如此海量的数据面前，处理数据的效率就是企业的生命。
+
+\end{description}
+
+\newpage
+
+\section{举例}
+\paragraph{}
+Web日志，RFID，传感网络，社交网络，社交数据（归功于社交数据革命），互联网文本和文件，互联网搜索索引，电话呼叫详单，天文学，大气学，基因组学，生物地球化学，生物学，以及其他复杂的和跨学科的研究，军事侦察，医疗记录，照片归档，视频归档和大规模电子商务。
+
+\begin{itemize}
+\item
+2000年，当斯隆数字巡天（SDSS）开始收集数据的时候，数周之内积累的数据就超过了天文学以往历史上积累的所有数据。持续的每晚200GB的数据积累到现在，SDSS的数据量已经超过140TB。而它的继任者，大型综合巡天望远镜（LSST）在
+
+\item
+2016年上线的时候，预计每5天就会得到这么多（140TB）数据。
+
+\item
+2010年，大型强子对撞机（LHC）的四个主要探测器总共产生了13PB的数据（1PB=1024TB）。
+
+\item
+沃尔玛每小时处理超过一百万消费者的交易，这些交易数据被导入一个数据量超过2.5PB的数据库——这个数据量是美国国会图书馆所有书籍所含信息的167倍。
+
+\item
+Facebook处理着来自用户的400亿张照片。
+
+\item
+FICO（猎鹰信用卡欺诈检测系统）保护着全世界21亿个活跃账户。
+
+\item
+据估计，包括所有公司在内的全世界的商业数据量，每1.2年翻一番。
+
+\item
+解码人类基因组，以前需要10年的处理时间，现在可以在一周内完成。
+\end{itemize}
+
+\newpage
+
+\section{市场}
+\paragraph{}
+经济的增长使得数据相关技术的需求量增加。从1990年到2005年，全世界有超过10亿人迈入中产阶级，他们更有文化，引领着信息的增长。现在，全世界有46亿移动电话用户和10到20亿的互联网用户。1986年，全球电信网络交换的数据是281PB，到了1993年，这个数据增长到了471PB，2000年2.2EB，2007年65EB，预计到了2013年，这个数字将达到667EB。
+
+\paragraph{}
+2011年3月，IBM宣布了“智慧计算”的框架以支持“智慧地球”，在智慧计算框架的众多组成部分中，大数据及其分析是关键。
+
+\paragraph{}
+2012年2月，Wikibon发布了收个大数据市场预测报告，2012年市场规模51亿美元，2017年将达到534亿。随着企业逐渐认识到大数据和相关分析将形成新的差异化竞争优势，提升运营效率，大数据相关技术和服务将获得长足发展，大数据将逐渐落地，并在未来五年保持58\%的惊人复合增长速度。
+\begin{figure}[htbp]
+\small
+\centering
+\includegraphics[width=0.8\textwidth]{Market.png}
+\caption{WikiBon预测}
+\label{fig:WikiBon}
+\end{figure}
+\paragraph{}
+目前的大数据市场领导者，按照收入排名，前三甲分别是IBM、英特尔和惠普，这些巨型企业将迎接来自成熟企业供应商和专业大数据厂商的挑战。专业厂商的盈利模式目前主要是围绕开源框架Hadoop和相关软件的商业化展开，前景不甚明了。
+
+\paragraph{}
+英特尔、希捷和Super Micro受益于大数据摆脱传统集群架构，转向通用标准硬件产品的趋势，互联网巨头Google和Facebook是这一趋势的代表者。
+
+\paragraph{}
+IBM在大数据方面的营收很大一部分归功于其强大的专业服务业务。此外，IBM在分析软件业务上的强势也为其大数据收入贡献不少。
+
+\paragraph{}
+Oracle的大数据收入包含了Exadata（国家人口库方案中采用了Oracle这一产品，报价上千万）和Exalogic，因为这些都是处理大数据的非传统方式。
+
+\paragraph{}
+Wikibon对大数据的定义包括：由于规模和类型太大太多，以致无法用传统数据库技术和相关工具处理或分析的数据集。大数据市场包括解决这个问题的技术、工具和服务，包括：
+\begin{itemize}
+\item
+Hadoop发行版、软件、子项目以及相关硬件;
+\item
+下一代数据仓库和相关硬件;
+\item
+大数据分析平台和应用;
+\item
+大数据相关的商业智能、数据挖掘和数据可视化平台和应用;
+\item
+大数据相关的数据集成平台和工具;
+\item
+大数据支持、培训和专业服务。
+\end{itemize}
+
+\newpage
+
+\section{技术}
+\paragraph{}
+大数据要求非传统的方法在可容忍的时间内处理巨量数据。所谓传统的方法和技术就是主机、RDBMS、共享存储，典型的是IBM的Unix（AIX）主机、Oracle的数据库或者IBM的DB2、光纤连接SAN共享存储。
+\paragraph{}
+大数据要求大规模并行处理（massively parallel-processing /MPP），数据不能在存储节点上，而需要在计算节点上。基于SAN/NAS的共享存储也非常必要，但只有共享存储的方式是不够的，典型的情况是安装了SSD或者高速SATA硬盘的并行计算节点（典型的是运行Linux的PC服务器）。这与Oracle ExaData的解决方案完全不同。显然，大数据是Google、Facebook等互联网企业引领的技术潮流。
+
+\subsection{Apache Hadoop}
+\paragraph{}
+Apache Hadoop是Google的MapReduce、GFS、BigTable等技术的开源实现，也是目前诸多专业厂商的提供的大数据解决方案和产品的基础。有点像2000年前，Linux/BSD内核中的IP过滤功能成了专业网络安全厂商做防火墙的技术基础。
+\paragraph{}
+Hadoop最初是开源搜索引擎实现 Nutch的一部分。从nutch0.8.0开始，其中的NDFS和MapReduce剥离出来成立一个新的开源项目，这就是Hadoop。而 nutch0.8.0版本较之以前的Nutch在架构上有了根本性的变化那就是完全构建在Hadoop的基础之上了。在Hadoop中实现了 Google的GFS和MapReduce算法，使Hadoop成为了一个分布式的计算平台。
+\begin{figure}[htbp]
+\small
+\centering
+\includegraphics[width=0.8\textwidth]{Hadoop.png}
+\caption{Hadoop结构}
+\label{fig:Hadoop}
+\end{figure}
+ 
+\paragraph{}
+Hadoop HDFS可以在一大堆廉价的PC服务器上存储PB级别的超大文件，并提供流式访问。MapReduce中，Map负责将数据打散，Reduce负责对数据进行聚集，用户只需要实现map 和reduce 两个接口，即可完成TB 级数据的计算。在TB级别上，MapReduce数据吞吐量比高集成度的主机/RDBMS/集中存储的方案在性能、容错、成本等方面有巨大优势。
+\paragraph{}
+Hadoop的应用案例有：阿里巴巴商业搜索引擎（15节点），百度日志分析（数百节点，每周3PB数据），Facebook数据挖掘（1100节点，12PB数据），Facebook日志统计（300节点，3PB数据），HULU（14节点，日志统计分析），Twitter，雅虎广告系统和搜索（4000个节点）。
+\paragraph{}
+Hadoop适用场景主要是日志分析、数据挖掘、大规模数据运算等。
+
+\subsection{IBM i2}
+\paragraph{}
+去年8月底，IBM收购了犯罪预防和数据情报分析软件公司i2（注意，i2与i2 Technologies是相互无关的两家公司，i2 Technologies是做CRM/SCM/SAP之类软件的）。据报道，i2是总部位于英国剑桥的数据情报分析软件公司，公司的4500名以上客户主要分布在银行、防务、健康医疗、保险行业和执法部门。据称，全球Top20的银行，有12家使用了i2公司的产品。波士顿警察局和洛杉矶Orange郡的刑事司法系统通过i2的Coplink共享犯罪数据。美国陆军花了960美元买了一套i2的“分析家”软件，用于其情报共享系统。
+\paragraph{}
+IBM希望通过对i2公司的收购，将其数据采集、分析和仓库软件与i2产相融合，帮助公司客户在处理海量数据之前确认可能遇到的问题，尤其是帮助IBM的客户管理数据以阻止诈骗和安全威胁。 
+\paragraph{}
+国内公安系统的大情报平台，据说大部分采用了i2的技术。
+
+\newpage
+
+\section{批评}
+\paragraph{}
+对于大数据概念的批评主要有几点：
+\begin{enumerate}
+\item
+从科学研究的原则出发，大数据中选出的代表性样本可能不具备代表性，有偏颇。
+\item
+异构数据的整合可能与数据的分析面临的挑战一样艰巨。
+\item
+基于大数据进行的分析依赖于社会、经济和政治的背景，需要“大判断”来进行补充。
+
+\end{enumerate}
+
+\paragraph{}
+在国内，Fenng（冯大辉）针对最近热门的大数据概念进行了批评，要点是认为大数据的商业前景被夸大：
+\begin{enumerate}
+\item
+大数据是个相对概念，新瓶装旧酒。
+\item
+大数据是IBM、Oracle等商业巨头的机会，中小型公司不要被忽悠，要绕道走。
+\item
+大数据的价值没那么大。
+
+\end{enumerate}
+
+\newpage
+\section{设想或建议}
+
+\paragraph{}
+目前主要是普及概念。各地公安的共享资源库建设已经涉及到大量的数据、异构、更新量很大的数据，有的省厅的数据达到数十TB。在这些数据的基础上，开展了大情报、警综等应用。
+\paragraph{}数据量和技术架构上，都还没有采用大数据相关技术。但是随着视频监控、各种物联网传感器、各项数据采集共享项目的建设和开展，数据量将进一步增大、数据源的种类和数据结构、数据更新量将迅速增加，大数据的概念迟早会引入，相关技术迟早会得到应用。
+
+\end{document}

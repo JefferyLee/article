@@ -1,0 +1,225 @@
+%!TEX TS-program = xelatex     
+%指定源文件处理程序为xelatex
+%!TEX encoding = UTF-8 Unicode    
+%指定源文件编码为UTF-8
+\documentclass[a4paper,14pt,openany]{article}
+\usepackage{fontspec,xltxtra,xunicode}  %指定中文包、字体包
+\setromanfont{SimSun} %指定字体。凡是系统中有的字体都可以指定
+
+\XeTeXlinebreaklocale “zh”
+\XeTeXlinebreakskip = 0pt plus 1pt minus 0.1pt %文章内中文自动换行
+
+\linespread{1.5} %设置行间距
+
+\setlength{\parindent}{2em}  %首行缩进2字符
+
+\usepackage{fancyhdr}% Modify the page headings of book 
+\pagestyle{fancy} %页码位置和风格，页眉下面有横线
+
+\newfontfamily{\H}{SimHei} %定义一个宏 \H 是黑体
+\newfontfamily{\E}{Arial} %定义另外一个宏\E 英文的时候，用\E指定用Arial字体
+
+\usepackage{draftwatermark}
+\SetWatermarkText{Weekly Technology Review by Ct0, Topwalk, \today}%设置水印文字
+\SetWatermarkLightness{0.95}%设置水印亮度
+\SetWatermarkScale{0.2}%设置水印大小
+
+\title{\H 每周技术评论No.3\\ ---IPv6时代的网络安全}
+\author{Jeffery}
+\date{\E\today}
+
+\begin{document}
+
+\maketitle %生成封面
+
+\newpage %新的一页
+\tableofcontents %生成目录
+
+\newpage
+\section{下一代互联网拉开帷幕} %新的章
+\subsection{IPv6发展简历}
+\paragraph{}
+IPv6协议由1998年12月IETF发布的RFC 2460\footnote{http://tools.ietf.org/html/rfc2460}定义，到现在已经14年了。如果从1992年IPng建议提出和IETF的IPng研究组成立算起，已经20年了。十多年来，IPv6协议的讨论、验证、实验网、工业界的准备等工作进行得很充分，部分IPv6协议中的技术如IPSec甚至向前移植到IPv4，并得到了广泛的应用。应该说，IPv6从原理到技术，从产业界到用户，都已经充分准备好了。
+\paragraph{}
+IPv4地址很早之前就不够用了，NAT/CIDR等技术一直在延续着IPv4生命。2003年，就有预言说IPv4地址空间只够用10年；2005年9月，CISCO的一份报告指出，IPv4地址将在4到5年内耗尽；业内关于IPv4地址耗尽的呼声向“狼来了”一样连续喊了好几年之后，2011年2月3日，IANA（Internet Assigned Numbers Authority）掌控的IPv4地址段的最后5个A类地址分配出去，正式宣告了IPv4地址的耗尽。
+\paragraph{}
+IPv4地址耗尽，续任者IPv6已经成熟，大转换的时代正在拉开帷幕。
+
+\subsection{中国下一代互联网启动}
+\paragraph{}
+2012年3月，国家发改委下发通知，决定组织实施2012年国家下一代互联网技术研发、产业化及规模商用、下一代互联网信息安全专项。同时，还发布了《关于下一代互联网“十二五”发展建设的意见》\footnote{http://www.ndrc.gov.cn/zcfb/zcfbtz/2012tz/W020120329402141091330.pdf}，指出"物联网、云计算、移动互联网、三网融合等新兴交互式应用将大规模发展，产业链各环节形成了对加快发展下一代互联网的迫切需求。"其目标是：十二五期间，”IPv6 宽带接入用户数超过 2500 万”；2013年底，“所有骨干网和约 10\%的城域网支持 IPv6，所有新建网络设备支持 IPv6，IPv6 宽带接入用户数超过800 万。"重点任务包括：网络基础设施建设、重点产品研发和产业化、网络商用及业务创新、网络与信息安全保障、理论研究与技术突破、标准体系与知识产权六个方面。
+
+\subsection{IPv6权威介绍}
+\paragraph{}
+对IPv6最权威、准确、精炼的介绍来自RFC 2460 \footnote{http://tools.ietf.org/html/rfc2460}的"Introduction"。
+\begin{quote}
+IP version 6 (IPv6) is a new version of the Internet Protocol,
+   designed as the successor to IP version 4 (IPv4) [RFC-791].  The
+   changes from IPv4 to IPv6 fall primarily into the following
+   categories:
+
+\begin{itemize}
+\item{Expanded Addressing Capabilities}
+\\
+         IPv6 increases the IP address size from 32 bits to 128 bits, to
+         support more levels of addressing hierarchy, a much greater
+         number of addressable nodes, and simpler auto-configuration of
+         addresses.  The scalability of multicast routing is improved by
+         adding a "scope" field to multicast addresses.  And a new type
+         of address called an "anycast address" is defined, used to send
+         a packet to any one of a group of nodes.
+
+\item{Header Format Simplification}
+\\
+         Some IPv4 header fields have been dropped or made optional, to
+         reduce the common-case processing cost of packet handling and
+         to limit the bandwidth cost of the IPv6 header.
+
+\item{Improved Support for Extensions and Options}
+\\
+
+         Changes in the way IP header options are encoded allows for
+         more efficient forwarding, less stringent limits on the length
+         of options, and greater flexibility for introducing new options
+         in the future.
+
+  \item{Flow Labeling Capability}
+\\
+         A new capability is added to enable the labeling of packets
+         belonging to particular traffic "flows" for which the sender
+         requests special handling, such as non-default quality of
+         service or "real-time" service.
+         
+  \item{Authentication and Privacy Capabilities}
+\\
+         Extensions to support authentication, data integrity, and
+         (optional) data confidentiality are specified for IPv6.
+\end{itemize}
+\end{quote}
+
+\newpage
+\section{IPv6协议}
+\paragraph{}
+IPv6定义了新的报文格式，设计上简化了路由设备的包头处理，提高了路由转发效率。由于报文格式不同，IPv6和IPv4两个协议不兼容。IP协议之上的传输层、会话层和应用层协议，绝大多数无需改变就可以承载于IPv6之上，只有FTP、IRC、NetBIOS、SOCKS、NTPv3这种在应用协议中内嵌了网络层地址应用协议是例外。
+
+\subsection{IPv6报文格式} %新的节
+\paragraph{}
+IPv6包头长度为40字节，为IPv4包头长度的两倍，但是由于IPv6地址比较长，源地址和目的地址在包头中就占了32字节，IPv4包头中的源地址和目的地址只占8字节。因此，除去源地址和目的地址，IPv6包头只有8字节，分为6个域，而IPv4包头有12字节，分为11个域。
+\paragraph{}
+可以看出，IPv6协议简化了IP报文格式，有利于路由器等网络设备的快速处理和转发。
+\begin{figure}[htbp]
+\small
+\centering
+\includegraphics[width=0.95\textwidth]{IPv6vsIPv4.png}
+\caption{IPv6与IPv4包头格式比较}
+\label{fig:IPv6vsIPv4}
+\end{figure}
+
+\subsection{IPv6的特点}
+\paragraph{}
+IPv6协议相对于IPv4，有很多特点和优点。
+\begin{enumerate}
+\item{\H 更大的地址空间}
+IPv6的主要优点是地址空间比IPv4更大，这也是IPv6要解决的主要问题。IPv6地址长度为128bits，而IPv4的32bits长度的地址。IPv4地址空间为40多亿，而IPv6地址空间可以给地球上的70亿人每人分配$4.8 \times 10^{28}$个地址。
+\begin{figure}[htbp]
+\small
+\centering
+\includegraphics[width=0.95\textwidth]{IPv6.png}
+\caption{IPv6地址格式}
+\label{fig:IPv6}
+\end{figure}
+\\
+通过CIDR等技术，IPv4地址利用率达到了14\%，这是一个很高的数字。IPv6将地址分为$2^{64}$个子网，每个子网$2^{64}$个地址，子网数量和每个子网中的IP地址数量都是IPv4整个地址空间的平方。这种方法虽然降低了地址利用率，但网络管理和路由转发将更加高效。
+\item{\H 组播}
+IPv6内置组播支持，并通过组播实现广播。
+\item{\H 地址自动配置}
+IPv6主机可以根据本机网卡的MAC地址自动配置IPv6地址，并通知路由器，获取路由信息。这比DHCP容易得多。与IPv4一样，IPv6主机也可以通过DHCP服务器或者手工配置地址。
+\begin{figure}[htbp]
+\small
+\centering
+\includegraphics[width=0.95\textwidth]{IPv6addrcfg.png}
+\caption{IPv6地址配置}
+\label{fig:IPv6}
+\end{figure}
+\item{\H 网络层安全}
+IPSec最初是为IPv6开发的，现在已经在IPv4中广泛使用。IPSec通过会话开始时的双向认证和密钥协商，可以对会话的每个IP报文进行认证和加密，实现端到端的网络层安全。
+\item{\H 简化的路由处理}
+IPv4包头中很少用到的域已经从IPv6固定报文头部中去掉，简化了路由设备的处理，提高了转发效率。IPv6路由器不处理IP分片，MTU\footnote{Maximum transmission unit
+，链路上可以传输的最大数据单元}发现和分片工作全部交由参与通讯的IPv6主机。IPv6包头没有校验和，报文完整性交由下面的链路层和上面的传输层来保证。对于没有专用硬件电路来计算校验和的软件路由转发，不用计算每个报文的校验和，可以减轻计算负载。
+\item{\H 移动性}
+IPv6路由设备允许整个子网移动到一个新的路由上而不需要重配路由，因此Mobile IPv6与Native IPv6一样高效。
+\item{\H 可选扩展}
+IPv6报文头部长度固定为40字节，可选加入额外的附加头部，大小仅受整个IP报文大小的限制。这为未来的QOS、安全、移动等服务提供了扩展性。
+\item{\H Jumbograms}\footnote{http://tools.ietf.org/html/rfc2675}
+IPv4报文最大64KB，IPv6报文最大可达4G。但实际上由于上层TCP/UDP的限制，一般情况下报文长度还是限制在64KB以内。如果开发专用传输协议的话，在高MTU链路上可以大大改进传输效率。
+\item{\H 隐私}
+没有NAT设备，并且通过自动配置的地址包含MAC地址，所以IPv6地址的唯一性更强，更容易标识出某用户。IPv6通过隐私性扩展解决这一问题。隐私扩展启用后，操作系统将为本机产生一个随机的、临时的主机标识，加上网络前缀组成本机地址，使用这一地址，用户在网络上的活动将难以追踪。
+\end{enumerate}
+
+\newpage
+\section{IPv6时代的安全威胁}
+\paragraph{}
+IPv6并未带来IP层以上的协议的变化，应用层的攻击和安全威胁一样存在。IPSec在IPv6协议栈的内置机制，但实际中未必启用，而且密钥管理等问题和IPv4时代一样存在。
+\paragraph{}
+IPv6将与IPv4长期共存，双协议栈，以及6in4、6to4、6over4等各种转换和隧道技术带来各种复杂性，也带来更多的安全隐患，为网络安全设备提出了更多更高的要求。
+\paragraph{}
+IPv6时代，各类攻击类型延续下来，一些攻击更困难了，一些反倒更容易了，还有一些攻击的方法发生了变化。
+\begin{enumerate}   %开启项目编号，参数还有enumerate，用于项目编号；description，用于名词解释
+\item{\H 网络扫描侦测}  %列出项目
+网络侦测是大部分攻击采取的第一步。IPv4中网络侦测的方式是发送ICMP报文扫描整个IP地址段寻找攻击目标主机，和进行端口扫描寻找开放的服务，并使用NMAP等工具识别应用服务和操作系统。
+\\
+IPv6时代，由于地址空间特别巨大，所以扫描地址段的方法将不可行。如果子网上有一万台主机，每秒扫描一百万个地址，平均需要29年才能发现第一个主机。但是通过另外的方法可以进行进行网络侦测，如DNS查询、抓包、猜测手工分配的地址等，还可以利用IPv6的组播机制进行路由、NTP、DHCP服务探测，通过收集Anycast回复讯息进行网络侦测。
+
+\item{\H 网络层未授权访问}
+IPv4网络中，通过防火墙实现网络层访问控制，对源地址、目的地址、源端口、目的端口、协议五元组和包头标志位进行网络层、会话层访问控制。
+\\
+IPv6下的访问控制同样依赖防火墙或者路由器访问控制表（ACL）等控制策略，根据地址、端口等信息实施控制。但IPv6环境中的的多宿主（多网卡多IP）、报文扩展头、IPSec、ICMPv6，以及Multicast、Anycast都为防火墙带来新的问题。
+
+\item{\H IP分片}
+IP分片在IPv4中用以逃避网络监控设备，如防火墙和IDS，也可以用来直接进行DOS攻击。IPv4中，重复的IP分片是正常的，端口地址、传输层信息存在于首个IP分片。
+\\
+协议规定，IPv6环境下不存在合法的重复的IP分片，也不存在小于1280字节的非结尾IP分片。这些IP分片都可以作为攻击试图直接过滤掉。
+
+\item{\H 地址端口假冒}
+假冒源地址和端口在IPv4环境下是常见的攻击手段，使得DOS等攻击行为难以追踪。IPv6环境下，良好的路由层次划分使网络接入商ISP可以具备检测地址假冒的能力，但隧道技术可以绕过这些检测。
+
+\item{\H 地址配置协议攻击}
+IPv4环境下，可以假冒ARP和DHCP信息；IPv6环境下，用于地址配置和网络配置的ND（Neighbor Discovery邻居发现）、RS（Router Solicitation路由器请求）、RA（Router Advertisement路由器通告）等协议信息同样可以假冒。
+\\
+IPv6支持任一节点都有可能向DNS上传域名和地址的SLAAC协议，以此来提高DNS的更新速率，但是这样也会增加冒用域名的风险。如果DNS使用SLAAC作为其更新的手段之一，必须要确定向其更新的节点的安全性，就如同DHCP中一样。需要对上传的域名信息的认真审核，来尽量降低这种伪造可能带来的巨大风险。
+
+\item{\H Smurf攻击}
+Smerf攻击是以攻击目标的IP地址作为源地址，以广播地址为目的地址，发送ICMP echo请求报文。IPv6没有广播地址，而且ICMPv6对于目标地址为组播地址的报文缺省不做回应，因此可以避免这种攻击。
+
+\item{\H 病毒和蠕虫}
+除了传播方式采用网络扫描的手段发现攻击目标的病毒之外，病毒和蠕虫攻击没有变化。
+
+\item{\H 双栈、隧道和转换}
+IPv6和IPv4的长时间共存已共识，而两种协议并存的过程中存在大量风险。由于现在IPv6下的保护软件不充分，很多IPv4下被禁止的服务可能因疏忽由IPv6进入。比如IPv6下的远程访问服务默认开启，对于很多在IPv4下禁止用户随意连接的主机而言，攻击者现在可以通过IPv6连接到用户的主机上，所以很多用户需要再次使用命令阻止IPv6下的远程访问连接。
+\\
+各种6in4隧道和6to4转换技术使得IPv6与IPv4共存的网络变得更加复杂，也就意味着存在更多的安全风险。
+
+\end{enumerate}
+
+\newpage
+\section{IPv6时代的网络安全技术和产品}
+\paragraph{}
+对于防火墙等网络安全设备，不仅仅是“支持”IPv6"的问题，还要支持IPv6协议的特点，如各种ICMPv6报文、Multicast等，而且，在IPv4/IPv6共存的时期，各种转换技术、隧道技术都需要考虑。
+\subsection{防火墙}
+\paragraph{}
+必须针对ICMPv6、IPv6扩展包头的检测。需要检测IPv4报文中的IPv6数据以及各种隧道如Miredo、Teredo等。
+\subsection{入侵检测和入侵防御}
+\paragraph{}
+需要支持对6in4的检测；支持对ISATAP隧道寻址协议的检测，对各中基于ICMPv6的协议、各类ICMPv6报文、IPv6 Multicast的检测等。在IPSec启用的情况下，入侵检测、入侵防御系统几乎起不到什么作用。
+\subsection{漏洞扫描和安全审计产品}
+\paragraph{}
+子网地址空间超大，因此依靠地址扫描寻找攻击和传播目标的蠕虫将很难传播；同时作为风险评估工具的漏洞扫描器也难以自动发现和扫描网络上的主机。需要通过登记地址、从DNS/DHCP/Firewall的日志中、从Netflow数据中查找地址，发现主机、进行审计。
+
+\newpage
+\section{机会和挑战}
+\paragraph{}
+"支持IPv6"只是对服务器、操作系统和应用软件的要求。对于网络安全设备来说，除了支持之外，还需要具体支持IPv6协议的特性，实现针对性的检测或防御。同时，过渡时期，IPv6/IPv4共存的情况事实上要求在同一台网络安全设备上既支持IPv4，又支持IPv6，还要支持两者的转换、隧道等应用方式。
+\paragraph{}
+对于市场的后来者，进入一个全新的技术领域可以和市场所有参与者站在同一起跑线上。但是对于正在到来的IPv6时代来说，由于过渡期还很长，网络安全技术和产品还需要依赖IPv4时代的巨大积累，这种情况下，对于后来者没有优势可言。
+
+\end{document}
